@@ -28,6 +28,10 @@ app.get("/api/test", (req, res, next) => {
     });
 });
 
+app.get('*', function(req, res){
+    res.status(404).send('Not available');
+});
+
 app.use(function(req, res){
     res.status(404);
 });
