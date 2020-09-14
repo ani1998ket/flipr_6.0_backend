@@ -16,7 +16,11 @@ app.get("/", (req, res, next) => {
     res.json({"message":"Ok"})
 });
 app.get("/api/test", (req, res, next) => {
-    var sql = "select * from covid19india"
+    req.query.age_min = parseInt( req.query.age_min )
+    req.query.age_max = parseInt( req.query.age_max )
+    let p = req.query;
+    var sql = `SELECT * FROM covid19india where ageEstimate + 0 >= ${p.age_min} AND ageEstimate + 0 <= ${p.age_max} AND gender = "${p.gender}" AND STATE = "${p.state}" AND (substr(reportedOn, 7, 4) || '-' || substr(reportedOn, 4, 2) || '-' || substr(reportedOn, 1, 2)) between "${p.date_start}" and "${p.date_end}" `; 
+    console.log( sql )
     var params = []
     db.all(sql, params, (err, rows) => {
         if (err) {
