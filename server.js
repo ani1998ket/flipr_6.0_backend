@@ -1,6 +1,8 @@
 // Create express app
 var express = require("express")
+var cors = require('cors')
 var app = express()
+app.use(cors())
 var db = require("./database.js")
 
 // Server port
